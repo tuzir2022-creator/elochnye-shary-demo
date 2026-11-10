@@ -1,0 +1,301 @@
+﻿<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1d1412">
+<title>Ёлочные шары с нанесением</title>
+<meta name="description" content="Демонстрационный макет: ёлочные шары с вашим именем, логотипом или поздравлением.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1d1412; --ink-2:#2a1d19; --cream:#f5ede1; --cream-2:#ebdfcc;
+  --claret:#8e2230; --claret-d:#6c1823; --pine:#1f3a2f; --brass:#c79a4a; --brass-l:#e3c07f;
+  --text:#2a1d19; --muted:#7a6a5e; --line:rgba(42,29,25,.16);
+  --todo-bg:#f6e9bd; --todo-ink:#8F7212;
+  --font-display:"Cormorant Garamond", Georgia, serif;
+  --font-body:"Golos Text", system-ui, sans-serif;
+  --gutter:max(16px, env(safe-area-inset-left));
+}
+*{box-sizing:border-box}
+html,body{overflow-x:clip}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ink);color:var(--text);font:400 1rem/1.6 var(--font-body);-webkit-text-size-adjust:100%}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--font-display);font-weight:600;margin:0;line-height:1.05;overflow-wrap:anywhere}
+p{margin:0}
+:focus-visible{outline:3px solid var(--brass);outline-offset:3px}
+.wrap{width:min(1180px,100%);margin-inline:auto;padding-inline:max(16px,env(safe-area-inset-left)) max(16px,env(safe-area-inset-right))}
+.todo{background:var(--todo-bg);color:var(--todo-ink);padding:.05em .45em;border-radius:4px;font-weight:500;white-space:normal}
+
+/* кнопки */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:48px;padding:0 1.6rem;border-radius:999px;border:0;font:500 1rem/1 var(--font-body);text-decoration:none;cursor:pointer;transition:background .2s,transform .2s;white-space:nowrap}
+.btn--brass{background:var(--brass);color:var(--ink)}
+.btn--brass:hover{background:var(--brass-l)}
+.btn--ghost{background:transparent;color:var(--cream);box-shadow:inset 0 0 0 1.5px rgba(245,237,225,.5)}
+.btn--ghost:hover{box-shadow:inset 0 0 0 1.5px var(--brass);color:var(--brass-l)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+/* шапка */
+.top{position:absolute;inset:0 0 auto 0;z-index:5;padding-top:env(safe-area-inset-top)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:72px}
+.brand{font:600 1.35rem/1 var(--font-display);color:var(--cream);text-decoration:none;letter-spacing:.01em}
+.top .tel{color:var(--cream);text-decoration:none;font-weight:500;font-size:.9375rem}
+
+/* первый экран */
+.hero{position:relative;min-height:100svh;min-height:100dvh;display:flex;align-items:flex-end;color:var(--cream);isolation:isolate;overflow:hidden}
+.hero__img{position:absolute;inset:0;z-index:-2;width:100%;height:100%;object-fit:cover;object-position:78% center}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(29,20,18,.92) 0%,rgba(29,20,18,.7) 42%,rgba(29,20,18,0) 72%),linear-gradient(0deg,rgba(29,20,18,.75) 0%,rgba(29,20,18,0) 38%)}
+.hero .wrap{padding-block:7rem calc(3rem + env(safe-area-inset-bottom))}
+.hero h1{font-size:clamp(2.7rem,7.4vw,6rem);max-width:15ch;letter-spacing:-.01em}
+.hero p.lead{margin-top:1.4rem;max-width:34ch;font-size:clamp(1.0625rem,1.6vw,1.25rem);color:var(--cream-2)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:2rem}
+.hero__note{margin-top:1.1rem;font-size:.875rem;color:var(--cream-2)}
+
+/* примерка */
+.try{background:var(--cream);padding-block:clamp(3.5rem,8vw,7rem)}
+.try__grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.try h2{font-size:clamp(2.2rem,4.6vw,3.8rem)}
+.try p.sub{margin-top:1rem;color:var(--muted);max-width:44ch}
+.field{display:block;margin-top:1.6rem}
+.field>span{display:block;font-weight:500;font-size:.9375rem;margin-bottom:.45rem}
+.input{width:100%;min-height:52px;padding:.8rem 1rem;border-radius:12px;border:1.5px solid var(--line);background:#fff;font:400 1rem/1.4 var(--font-body);color:var(--text)}
+.input:focus{border-color:var(--claret);outline:none;box-shadow:0 0 0 3px rgba(142,34,48,.18)}
+textarea.input{min-height:96px;resize:vertical}
+.swatches{display:flex;gap:12px;margin-top:.2rem;flex-wrap:wrap}
+.sw{width:44px;height:44px;border-radius:50%;border:0;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);position:relative}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 3px var(--cream),0 0 0 5px var(--claret)}
+.try .btn{margin-top:1.8rem}
+.stage{display:grid;place-items:center;min-height:340px;padding-top:4.5rem}
+.ball{position:relative;width:min(78vw,380px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;padding:14%;text-align:center;
+  background:radial-gradient(circle at 30% 26%,rgba(255,255,255,.7) 0 4%,rgba(255,255,255,0) 20%),radial-gradient(circle at 50% 55%,var(--b1) 0%,var(--b2) 72%,var(--b3) 100%);
+  box-shadow:inset -18px -26px 48px rgba(0,0,0,.35),inset 10px 12px 30px rgba(255,255,255,.12),0 34px 40px -18px rgba(42,29,25,.55);
+  transition:background .35s}
+.ball::before{content:"";position:absolute;top:-22px;left:50%;width:46px;height:30px;transform:translateX(-50%);background:linear-gradient(90deg,#9a7330,#e3c07f 45%,#9a7330);border-radius:6px 6px 3px 3px}
+.ball::after{content:"";position:absolute;top:-58px;left:50%;width:24px;height:42px;transform:translateX(-50%);border:3px solid #9a7330;border-bottom:0;border-radius:24px 24px 0 0}
+.ball__text{font:600 var(--fs,2.4rem)/1.05 var(--font-display);color:var(--tc);text-shadow:0 1px 0 rgba(0,0,0,.35);overflow-wrap:anywhere;max-width:100%;white-space:pre-line}
+.ball[data-c="claret"]{--b1:#b83245;--b2:#8e2230;--b3:#5b1019;--tc:#f1d08a}
+.ball[data-c="pine"]{--b1:#2f6a54;--b2:#1f3a2f;--b3:#0f2019;--tc:#f1d08a}
+.ball[data-c="ivory"]{--b1:#fbf4e6;--b2:#e9dcc0;--b3:#b9a67e;--tc:#8e2230}
+.ball[data-c="night"]{--b1:#35507d;--b2:#1c2c4a;--b3:#0c1626;--tc:#f4f4f6}
+.stage__cap{margin-top:2.4rem;color:var(--muted);font-size:.875rem;text-align:center}
+
+/* галерея */
+.gal{background:var(--ink);color:var(--cream);padding-block:clamp(3.5rem,8vw,7rem)}
+.gal h2{font-size:clamp(2.2rem,4.6vw,3.8rem);max-width:16ch}
+.gal__grid{margin-top:2.4rem;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-auto-rows:clamp(170px,19vw,280px);gap:12px;grid-template-areas:"a a b b c c" "a a d d e e"}
+.gal figure{margin:0;position:relative;overflow:hidden;border-radius:14px;background:var(--ink-2);min-height:0}
+.gal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:2.2rem 1rem .9rem;background:linear-gradient(0deg,rgba(29,20,18,.88),rgba(29,20,18,0));font-size:.9375rem}
+.gal figcaption b{display:block;font:600 1.3rem/1.1 var(--font-display)}
+.g1{grid-area:a}.g2{grid-area:b}.g3{grid-area:c}.g4{grid-area:d}.g5{grid-area:e}.gal__note{margin-top:1.4rem;font-size:.9375rem;color:var(--cream-2)}
+
+/* как заказать */
+.how{background:var(--cream-2);padding-block:clamp(3.5rem,8vw,6.5rem)}
+.how h2{font-size:clamp(2.2rem,4.6vw,3.6rem)}
+.steps{list-style:none;margin:2.4rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.steps li{display:flex;flex-direction:column;gap:.7rem}
+.ico{width:58px;height:58px;border-radius:50%;background:var(--claret);color:var(--cream);display:grid;place-items:center}
+.ico svg{width:28px;height:28px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.steps h3{font-size:1.55rem}
+.steps p{color:var(--muted);font-size:.9375rem}
+.terms{margin-top:2.2rem;display:flex;flex-wrap:wrap;gap:10px 28px;font-size:.9375rem}
+
+/* форма */
+.order{background:var(--pine);color:var(--cream);padding-block:clamp(3.5rem,8vw,6.5rem)}
+.order__grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(2rem,6vw,5rem)}
+.order h2{font-size:clamp(2.2rem,4.6vw,3.6rem)}
+.order .sub{margin-top:1rem;color:var(--cream-2);max-width:40ch}
+.order form{background:var(--cream);color:var(--text);border-radius:20px;padding:clamp(1.2rem,3vw,2rem)}
+.row2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.consent{display:flex;gap:12px;align-items:flex-start;margin-top:1.2rem;font-size:.875rem;line-height:1.5;color:var(--muted)}
+.consent input{flex:none;width:22px;height:22px;margin-top:2px;accent-color:var(--claret)}
+.consent a{color:var(--claret)}
+.order form .btn{margin-top:1.2rem;width:100%;background:var(--claret);color:var(--cream)}
+.order form .btn:hover:not([disabled]){background:var(--claret-d)}
+.msg{margin-top:1rem;padding:.9rem 1rem;border-radius:10px;background:#e8f1e9;color:#1f3a2f;font-size:.9375rem}
+.contacts{margin-top:2rem;display:grid;gap:12px;font-size:1rem}
+.contacts div{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.contacts b{font-weight:500;color:var(--cream-2);min-width:7.5rem}
+
+footer{background:var(--ink);color:var(--cream-2);padding:2rem 0 calc(2rem + env(safe-area-inset-bottom));font-size:.875rem}
+footer .wrap{display:grid;gap:.6rem}
+footer a{color:var(--brass-l)}
+
+@media (max-width:900px){
+  .try__grid,.order__grid{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .gal__grid{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(150px,42vw,230px);grid-template-areas:"a a" "a a" "b c" "d e"}
+  .hero::after{background:linear-gradient(0deg,rgba(29,20,18,.94) 0%,rgba(29,20,18,.7) 45%,rgba(29,20,18,.15) 80%)}
+  .hero__img{object-position:80% 30%}
+}
+@media (max-width:520px){
+  .row2{grid-template-columns:minmax(0,1fr)}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .top .tel{display:none}
+  .hero__cta .btn{flex:1 1 100%}
+  .btn{white-space:normal;text-align:center;padding-block:.8rem}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Ёлочные шары</a>
+    <a class="tel" href="#contacts"><span class="todo">&lt;&lt;телефон&gt;&gt;</span></a>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <img class="hero__img" src="assets/hero.jpg" alt="Красный ёлочный шар с золотым рисунком из ёлок на живой ёлке" width="1600" height="1067" fetchpriority="high">
+  <div class="wrap">
+    <h1>Ёлочные шары с вашим именем</h1>
+    <p class="lead">Нанесём имя, логотип или поздравление на стеклянный шар. Для семьи, сотрудников и клиентов.</p>
+    <div class="hero__cta">
+      <a class="btn btn--brass" href="#try">Примерить надпись</a>
+      <a class="btn btn--ghost" href="#order">Оставить заявку</a>
+    </div>
+    <p class="hero__note">Срок изготовления: <span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></p>
+  </div>
+</section>
+
+<section class="try" id="try">
+  <div class="wrap try__grid">
+    <div>
+      <h2>Посмотрите, как будет выглядеть ваш шар</h2>
+      <p class="sub">Напишите имя, название компании или короткое поздравление и выберите цвет. Так проще сказать, что именно нужно нанести.</p>
+      <label class="field"><span>Надпись на шаре</span>
+        <textarea class="input" id="ballText" maxlength="40" rows="2">С Новым
+годом!</textarea>
+      </label>
+      <div class="field"><span>Цвет шара</span>
+        <div class="swatches" role="group" aria-label="Цвет шара">
+          <button class="sw" type="button" data-c="claret" data-name="бордовый" aria-pressed="true" aria-label="Бордовый" style="background:radial-gradient(circle at 35% 30%,#b83245,#6c1823)"></button>
+          <button class="sw" type="button" data-c="pine" data-name="хвойный зелёный" aria-pressed="false" aria-label="Хвойный зелёный" style="background:radial-gradient(circle at 35% 30%,#2f6a54,#0f2019)"></button>
+          <button class="sw" type="button" data-c="ivory" data-name="слоновая кость" aria-pressed="false" aria-label="Слоновая кость" style="background:radial-gradient(circle at 35% 30%,#fbf4e6,#b9a67e)"></button>
+          <button class="sw" type="button" data-c="night" data-name="тёмно-синий" aria-pressed="false" aria-label="Тёмно-синий" style="background:radial-gradient(circle at 35% 30%,#35507d,#0c1626)"></button>
+        </div>
+      </div>
+      <a class="btn btn--brass" href="#order" id="useBall">Заказать такой шар</a>
+    </div>
+    <div class="stage">
+      <div class="ball" id="ball" data-c="claret" role="img" aria-label="Пробный шар с вашей надписью">
+        <span class="ball__text" id="ballOut">С Новым
+годом!</span>
+      </div>
+      <p class="stage__cap">Макет для примерки. Реальный вид нанесения согласуем до изготовления.</p>
+    </div>
+  </div>
+</section>
+
+<section class="gal" id="gal">
+  <div class="wrap">
+    <h2>Какие шары можно взять за основу</h2>
+    <div class="gal__grid">
+      <figure class="g1"><img src="assets/silver.jpg" alt="Глянцевые и глиттерные шары цвета шампань на ёлке" loading="lazy"><figcaption><b>Глянец и глиттер</b>Классика для ёлки и подарков</figcaption></figure>
+      <figure class="g2"><img src="assets/mix.jpg" alt="Золотые, красные, зелёные и серебристые шары на белом фоне" loading="lazy"><figcaption><b>Матовые и глянцевые</b>Золото, красный, зелёный, серебро</figcaption></figure>
+      <figure class="g3"><img src="assets/white.jpg" alt="Белый шар с узором на тёмной хвойной ветке" loading="lazy"><figcaption><b>Белые и светлые</b>Хорошо читается тёмная надпись</figcaption></figure>
+      <figure class="g4"><img src="assets/gold.jpg" alt="Прозрачные шары с золотой, красной и серебряной мишурой" loading="lazy"><figcaption><b>Прозрачные с наполнением</b>Для подарочных наборов</figcaption></figure>
+      <figure class="g5"><img src="assets/pile.jpg" alt="Россыпь красных, зелёных и золотых шаров" loading="lazy"><figcaption><b>Для компаний</b>Партия с единым оформлением</figcaption></figure>
+    </div>
+    <p class="gal__note">Цены, размеры и минимальный тираж: <span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></p>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="wrap">
+    <h2>Как заказать</h2>
+    <ol class="steps">
+      <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></span><h3>Пишете нам</h3><p>Оставляете заявку или пишете в мессенджер: что нанести и сколько шаров нужно.</p></li>
+      <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 10h16"/></svg></span><h3>Согласуем макет</h3><p>Присылаем, как будет выглядеть надпись или логотип. Вносим правки.</p></li>
+      <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="14" r="6.5"/><path d="M12 7.5V4M10 4h4"/></svg></span><h3>Наносим</h3><p>Изготавливаем шары. Срок: <span class="todo">&lt;&lt;запросить&gt;&gt;</span></p></li>
+      <li><span class="ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l9-4 9 4v8l-9 4-9-4z"/><path d="M3 8l9 4 9-4M12 12v8"/></svg></span><h3>Получаете</h3><p>Упаковываем, чтобы довезти целыми. Доставка и самовывоз: <span class="todo">&lt;&lt;запросить&gt;&gt;</span></p></li>
+    </ol>
+    <div class="terms">
+      <span>Оплата: <span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></span>
+      <span>Гарантия на нанесение: <span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></span>
+    </div>
+  </div>
+</section>
+
+<section class="order" id="order">
+  <div class="wrap order__grid">
+    <div>
+      <h2>Оставьте заявку</h2>
+      <p class="sub">Ответим и уточним детали: тираж, цвет, шрифт и срок.</p>
+      <div class="contacts" id="contacts">
+        <div><b>Телефон</b><span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></div>
+        <div><b>Мессенджеры</b><span class="todo">&lt;&lt;Telegram, MAX, ВК: запросить ссылки&gt;&gt;</span></div>
+        <div><b>Адрес</b><span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></div>
+        <div><b>Время работы</b><span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></div>
+      </div>
+    </div>
+    <form id="form" novalidate>
+      <div class="row2">
+        <label class="field" style="margin-top:0"><span>Имя</span><input class="input" name="name" autocomplete="name" required></label>
+        <label class="field" style="margin-top:0"><span>Телефон</span><input class="input" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7" required></label>
+      </div>
+      <label class="field"><span>Что нанести и какой цвет</span><textarea class="input" id="wish" name="wish" rows="3" placeholder="Например: имя и дата, бордовый шар"></textarea></label>
+      <label class="field"><span>Сколько шаров</span><input class="input" name="qty" inputmode="numeric" placeholder="Например: 1 или 50"></label>
+      <label class="consent"><input type="checkbox" id="agree"><span>Я согласен на обработку персональных данных и ознакомился с <a href="politika.html" target="_blank" rel="noopener">политикой обработки данных</a>.</span></label>
+      <button class="btn" type="submit" id="send" disabled>Отправить заявку</button>
+      <p class="msg" id="msg" hidden>Это демонстрационный макет: заявка никуда не отправляется. На рабочем сайте она придёт вам в Telegram или на почту.</p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Демонстрационный макет, не является официальным сайтом организации.</span>
+    <span>Реквизиты оператора персональных данных: <span class="todo">&lt;&lt;запросить у заказчика&gt;&gt;</span></span>
+    <a href="politika.html">Политика обработки персональных данных</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var ball=document.getElementById('ball'), out=document.getElementById('ballOut'),
+      inp=document.getElementById('ballText'), wish=document.getElementById('wish'),
+      sws=[].slice.call(document.querySelectorAll('.sw')), color='claret', cname='бордовый';
+  function size(t){
+    var longest=t.split('\n').reduce(function(m,s){return Math.max(m,s.length)},0), n=t.length;
+    var fs=Math.max(1.05, Math.min(2.6, 15/Math.max(longest,5)+0.7-(n>20?0.25:0)));
+    ball.style.setProperty('--fs',fs.toFixed(2)+'rem');
+  }
+  function upd(){
+    var t=inp.value.replace(/\s+$/,'')||'Ваш текст';
+    out.textContent=t; size(t);
+  }
+  inp.addEventListener('input',upd); upd();
+  sws.forEach(function(b){b.addEventListener('click',function(){
+    sws.forEach(function(x){x.setAttribute('aria-pressed','false')});
+    b.setAttribute('aria-pressed','true'); color=b.dataset.c; cname=b.dataset.name; ball.dataset.c=color;
+  })});
+  document.getElementById('useBall').addEventListener('click',function(){
+    var t=inp.value.replace(/\s+/g,' ').trim();
+    wish.value='Надпись: «'+(t||'уточню позже')+'», цвет шара: '+cname;
+  });
+  var agree=document.getElementById('agree'), send=document.getElementById('send'), msg=document.getElementById('msg'), form=document.getElementById('form');
+  agree.addEventListener('change',function(){send.disabled=!agree.checked});
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!agree.checked) return;
+    var n=form.elements.name.value.trim(), p=form.elements.phone.value.replace(/\D/g,'');
+    if(!n||p.length<10){msg.textContent='Укажите имя и телефон полностью.';msg.hidden=false;msg.style.background='#f5e1e1';msg.style.color='#6c1823';return}
+    msg.textContent='Это демонстрационный макет: заявка никуда не отправляется. На рабочем сайте она придёт вам в Telegram или на почту.';
+    msg.style.background='';msg.style.color='';msg.hidden=false;
+  });
+})();
+</script>
+</body>
+</html>
+
+
